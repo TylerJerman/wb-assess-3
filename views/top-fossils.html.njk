@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Most Liked Fossils</title>
+  </head>
+  <body>
+    <h1>Welcome, {{ userName }}</h1>
+
+    {% for fossil in fossils %}
+      <h3>{{ userName }}, this is a {{ fossil.name }}</h3>
+      <p>Liked {{ fossil.num_likes }} times.</p>
+      <img src="{{ fossil.img }}" alt="{{ fossil.name }}" />
+    {% endfor %}
+    {% extends "base.html.njk" %}
+
+{% block content %}
+  <h1>Welcome, {{ userName }}</h1>
+
+  {% for fossil in fossils %}
+    <h3>{{ userName }}, this is a {{ fossil.name }}</h3>
+    <p>Liked {{ fossil.num_likes }} times.</p>
+    <img src="{{ fossil.img }}" alt="{{ fossil.name }}" />
+  {% endfor %}
+
+  <form method="POST" action="/like-fossil">
+    <label for="fossil-select">Choose a fossil:</label>
+    <select id="fossil-select" name="fossilId">
+      {% for fossilKey, fossil in fossils %}
+        <option value="{{ fossilKey }}">{{ fossil.name }}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="Like">
+  </form>
+{% endblock %}
+
+  <form action="/get-name">
+    <div>
+      <label for="namefield">What's your name?</label>
+      <input id="namefield" type="text" name="name" required />
+    </div>
+    <div>
+      <input type="submit" />
+    </div>
+  </form>
+{% endblock %}
+  </body>
+</html>
